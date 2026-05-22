@@ -39,7 +39,7 @@ Agent runtime ─► requests tool/action ─► Policy engine (control plane)
 | 003-FR-006 | When no rule matches, the default MUST be `escalate` (route to approval). Operator MAY override default to `deny` per scope. |
 | 003-FR-007 | Approval queue MUST be visible in the dashboard within 1 second of escalation. |
 | 003-FR-008 | An approval decision MAY produce an auto-generated rule (`approve once / approve always for this pattern`); auto-rules MUST be audit-logged with operator id, reason, and easy revocation. |
-| 003-FR-009 | Unhandled escalation MUST time out per a configurable decision window (default 24h) and resolve to deny with a clear cause. |
+| 003-FR-009 | Unhandled escalation MUST time out per a configurable decision window. **Per-class defaults:** `sensitive` (destructive/irreversible) = 24h; `normal` (new tool/host/permission) = 4h; `routine` (predictable variations of known patterns) = 30 min. Operator overridable per scope. On timeout, the request resolves to deny with cause `approval_timeout`. |
 | 003-FR-010 | The policy engine MUST emit traces of evaluation for every decision (rule match path, latency, decision). |
 | 003-FR-011 | Policies MUST support a dry-run mode where decisions are logged but not enforced — used for migrating from permissive to strict. |
 | 003-FR-012 | Outcall handles network egress; the Clawie policy engine MUST coordinate with Outcall by handing it the relevant ruleset on container spawn and consuming its decisions in the audit. |

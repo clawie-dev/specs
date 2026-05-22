@@ -204,7 +204,7 @@ sync:
 | 026-FR-014 | Gates of kind `hitl` MUST route to the approval queue (spec 005). |
 | 026-FR-015 | Operator override path: `clawie task transition <item> <status> --force --reason "..."`. Force-transition MUST be audited with operator id, written as a comment to the external item, and counted in a metric for trend visibility. |
 | 026-FR-016 | Multiple roles MAY share ownership of a status (e.g., `["reviewer", "architect"]`); any may act. |
-| 026-FR-017 | Cyclic transitions are allowed (e.g., Code Review → In Development → Code Review); each iteration counted, max-iterations cap (default 5) escalates to operator per spec 016's loop rules. |
+| 026-FR-017 | Cyclic transitions are allowed (e.g., Code Review → In Development → Code Review); each iteration counted, max-iterations cap (default 8) escalates to operator per spec 016's loop rules. |
 
 ### Sync & reconciliation
 
@@ -237,7 +237,7 @@ sync:
 |---|---|
 | 026-NFR-001 | Transition evaluation overhead < 100ms (excluding external API latency). |
 | 026-NFR-002 | Webhook ingest must converge external→internal within 5s p95. |
-| 026-NFR-003 | At most 5% of operator force-overrides per month is a healthy rate; rising trend triggers an alert (this is a workflow-design quality signal). |
+| 026-NFR-003 | The platform MUST track per-team force-override baseline rate over a rolling window (default 30 days). Alerts fire on a *relative* spike (e.g., this week's rate is 2× the 30-day baseline) rather than an absolute threshold — what's "healthy" depends on the team's workflow maturity. |
 
 ## User stories
 

@@ -59,7 +59,7 @@ A single API is the only writer to the control plane. CLI and Dashboard both con
 | ID | Requirement |
 |---|---|
 | 023-FR-001 | API MUST be OpenAPI-described; spec auto-generated and published. |
-| 023-FR-002 | Auth via operator token (Bearer); future-compat for OAuth/SSO planned, not in v1. |
+| 023-FR-002 | Auth via single operator token (Bearer) in v1. v1 supports exactly one operator; every API write is attributed to constant `operator_id = "root"` in audit. Multi-operator + RBAC is a v2 spec, not delivered in v1. OAuth/SSO planned with v2. |
 | 023-FR-003 | All write operations MUST be idempotent via `Idempotency-Key` header. |
 | 023-FR-004 | Versioning via URL path (`/v1/...`); breaking changes increment major. |
 | 023-FR-005 | Pagination cursor-based; default page size 50, max 500. |

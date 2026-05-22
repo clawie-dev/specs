@@ -7,7 +7,7 @@
 
 ## Purpose
 
-The visual command center. Approvals, project status, agent health, fleet view, cost, audit, benchmarks, workflow diagrams, change review. AdonisJS + Inertia (Vue or React); SSR with client-side reactivity.
+The visual command center. Approvals, project status, agent health, fleet view, cost, audit, benchmarks, workflow diagrams, change review. **Stack:** AdonisJS + Inertia + Vue 3 (locked for v1); SSR with client-side reactivity. Tailwind CSS for styling. Vue chosen for the lowest-friction match with the AdonisJS Inertia adapter ecosystem.
 
 ## Top-level navigation
 

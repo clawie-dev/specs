@@ -53,10 +53,11 @@ trusted_signers: [marketplace, your-team]
 |---|---|
 | 010-FR-001 | The runtime MUST hot-load `capability.md` for every declared skill into the system prompt scaffold. |
 | 010-FR-002 | `full.md` and detailed prompts MUST be lazy-loaded by an explicit "load skill" tool call. |
-| 010-FR-003 | Skills MUST be signature-verified at install. Unsigned skills require `--unsafe` flag. |
+| 010-FR-003 | Skills MUST be signature-verified at install per the trust tiers in 010-FR-003a. Unsigned skills require explicit `--unsafe` flag for local install. A skill published to the marketplace MUST be at minimum author-signed; unsigned local skills MUST NOT be referenced as dependencies by any published skill (validator-enforced). |
+| 010-FR-003a | **Signature trust tiers:** `marketplace` (signed by marketplace key after review — gold tier, the default trust required for any new marketplace install); `author` (author-signed only — silver tier, requires operator explicit opt-in via `--trust author` per author key); `unsigned` (dev mode only — requires `--unsafe`, dashboard banner, never auto-installable). Per-team config declares the minimum acceptable tier. |
 | 010-FR-004 | Skills MUST declare required tools and permissions; install warns the operator about new permission asks. |
 | 010-FR-005 | Skills MUST be pinned by version (`@1.2.0`) in the agent's TOOLS.md. |
-| 010-FR-006 | Marketplace skills MUST be mirrored as submodules under `skills-registry/`. |
+| 010-FR-006 | Marketplace skills MUST be mirrored as a submodule under `skills-registry/` in the root config repo. This mirror pins the marketplace state at a known SHA; agent TOOLS.md references skills by `name@version`, which the platform resolves against the mirror at agent install/boot time. `clawie skill upgrade` bumps the mirror pin and stages the agent-side version bumps as a PR. |
 | 010-FR-007 | Skill smoke tests MUST pass before merge to the agent that declares them. |
 | 010-FR-008 | Skill upgrades MUST be reviewable as PRs (diff between versions). |
 | 010-FR-009 | A skill MAY require other skills (dependency graph). Cyclic deps rejected at install. |
@@ -67,7 +68,7 @@ trusted_signers: [marketplace, your-team]
 
 | ID | Requirement |
 |---|---|
-| 010-NFR-001 | Hot prompt cost: ≤200 tokens per declared skill on average. |
+| 010-NFR-001 | Hot prompt cost: ≤500 tokens per declared skill (capability.md summary). Per-agent hot-prompt cap: ≤8 000 tokens total across all declared skills. Skills exceeding the per-skill cap fail validation; agents whose total exceeds the cap require operator review at boot. |
 | 010-NFR-002 | Lazy load latency < 200ms per skill. |
 | 010-NFR-003 | Marketplace mirror sync nightly or on-demand. |
 

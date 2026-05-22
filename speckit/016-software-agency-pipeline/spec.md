@@ -38,7 +38,7 @@ devops-setup     ← devops agent
   ↓
 deploy-staging    ← devops agent
   ↓
-e2e-test          ← reviewer agent (or qa role if defined)
+e2e-test          ← qa agent
   ↓ (loop on failure)
 deploy-production ← devops agent
   ↓ (approval gate: launch-go)
@@ -62,7 +62,7 @@ completed
 | 016-FR-005 | The pipeline MUST be pausable, resumable, abortable at any stage. |
 | 016-FR-006 | Inter-stage handoffs MUST happen via tickets (spec 014) — not in-process calls. |
 | 016-FR-007 | Each stage MUST have a "definition of done" checklist that the responsible agent and reviewer agree on before transition. |
-| 016-FR-008 | Loops (code → review → code) MUST be bounded by max-iteration (default 5) and a fallback to operator escalation. |
+| 016-FR-008 | Loops (code → review → code) MUST be bounded by max-iteration (default 8) and a fallback to operator escalation. Per-stage overrides allowed (e.g., security-review fails strict at 3 to force human inspection of pathological cases). |
 | 016-FR-009 | The project workspace (spec 015) MUST be the working dir for all code-touching stages. |
 | 016-FR-010 | Budgets (spec 007) cascade from project → stages → tasks. |
 | 016-FR-011 | A project MUST surface a single dashboard "project view" with stage progress, current approvals, cost, artifacts. |

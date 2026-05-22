@@ -21,13 +21,13 @@ Research is unanimous: durable, visible, audited approval flow is the dividing l
 | 005-FR-002 | Approvals MUST surface via dashboard within 1s of creation; SHOULD also push to configured channels (email, Slack, Telegram, custom webhook). |
 | 005-FR-003 | Approval payload MUST include: requesting agent, action, resource, reason from the agent, context summary, suggested decisions. |
 | 005-FR-004 | Decision actions: `approve`, `approve_with_rule`, `deny`, `deny_with_rule`, `request_more_info`. |
-| 005-FR-005 | Decision window MUST be configurable per team/scope (default 24h). On expiry, the approval times out to deny with cause `approval_timeout`. |
+| 005-FR-005 | Decision window MUST be configurable per team/scope. Per-class defaults (matching spec 003): `sensitive` = 24h, `normal` = 4h, `routine` = 30 min. On expiry, the approval times out to deny with cause `approval_timeout`. |
 | 005-FR-006 | `approve_with_rule` / `deny_with_rule` MUST produce a policy rule committed to the relevant repo (PR auto-created for repo merge if remote configured). |
 | 005-FR-007 | Approval list views MUST support filter by team, project, agent, urgency, age. |
 | 005-FR-008 | Bulk actions (approve N similar, deny N) MUST be supported with confirmation. |
 | 005-FR-009 | Pre-authorized patterns: operator MAY pre-approve a class of actions in a team's policy file ahead of time. |
 | 005-FR-010 | Pause / resume / abort: every running task MUST have an operator-callable pause, resume, and abort. Pause checkpoints and suspends; resume restarts from checkpoint; abort terminates and cleans up. |
-| 005-FR-011 | An approval MUST capture the operator id and an optional free-text reason; reason MUST be logged to audit. |
+| 005-FR-011 | An approval MUST capture the operator id (v1: constant `"root"` per spec 023's single-operator model; future-proof for multi-operator/RBAC in v2) and an optional free-text reason; reason MUST be logged to audit. |
 | 005-FR-012 | Auto-rule generation: when `approve_with_rule` is chosen, dashboard MUST let the operator narrow the rule scope (exact match → pattern). |
 | 005-FR-013 | A "kill switch" MUST allow an operator to pause an entire team, an entire project, or the entire platform with one action. Audit logged. |
 

@@ -30,20 +30,21 @@ This is also OpenHands' core pattern, refined for the durable-state world.
 |---|---|
 | 015-FR-001 | Each project MUST declare its workspace source (local path or remote git URL) and default mode in `projects/<name>/project.yaml`. |
 | 015-FR-002 | A task MAY override the default mode per its declared intent. |
-| 015-FR-003 | `mount-rw` MUST acquire a durable workspace lock (one task at a time). |
+| 015-FR-003 | `mount-rw` MUST acquire a durable workspace lock (one task at a time). The lock is held only for the duration of the task's *container lifetime*; the container itself remains ephemeral per spec 002. Lock release happens on container reap, regardless of task outcome. |
 | 015-FR-004 | `copy-ephemeral` MUST capture a tree hash before/after and emit a diff to the project's artifacts. |
-| 015-FR-005 | `clone-branch` MUST commit changes, push to a feature branch, and optionally open a PR via configured tool. |
-| 015-FR-006 | File writes MUST be evaluated by the policy engine: writes outside `/workspace` blocked; sensitive files (e.g., `.env`, `secrets.json`) blocked by default. |
+| 015-FR-005 | `clone-branch` MUST commit changes, push to a feature branch, and optionally open a PR via configured tool. **By default** `clone-branch` operates against a **fork** of the customer repo (forked under a Clawie-controlled account), with PRs opened cross-fork to upstream — eliminating the need to grant the agent push rights to the upstream main repo. Direct-push to the customer's repo MUST require explicit `clone-branch.allow_direct_push: true` per project + an approval gate. |
+| 015-FR-006 | File writes MUST be evaluated by the policy engine: writes outside `/workspace` blocked; sensitive files blocked by default per the canonical default-deny list (015-FR-009a). Both reads AND writes to deny-listed paths are blocked — agents cannot exfiltrate via read either. |
 | 015-FR-007 | Workspace MUST be quota-limited (disk size). Exceeding cap fails the task with cause. |
 | 015-FR-008 | Diffs MUST be reviewable in the dashboard before any merge to customer main. |
-| 015-FR-009 | `.clawieignore` (similar to .gitignore) MUST allow customers to declare paths off-limits to agents. |
+| 015-FR-009 | `.clawieignore` (similar to .gitignore) MUST allow customers to declare paths off-limits to agents. Customer entries are *additive* to the platform default-deny list — they can only narrow, not widen, agent access. |
+| 015-FR-009a | The platform MUST apply a **default-deny list** to every workspace mount, regardless of customer `.clawieignore`. Both reads and writes refused, with cause `workspace_protected_path`. Operator MAY grant per-path exceptions via explicit policy rule with audit reason. The default-deny list MUST include at minimum: `.env`, `.env.*`, `*.pem`, `*.key`, `*.p12`, `*.pfx`, `id_rsa*`, `id_ed25519*`, `secrets/`, `secret/`, `.aws/`, `.ssh/`, `.docker/config.json`, `.docker/config`, `.gnupg/`, `credentials.json`, `credentials*.yaml`, `service-account*.json`, `.netrc`, `*.sqlite`, `*.sqlite3`, `*.db`, `.git/config` (may contain remote credentials), `node_modules/.cache/secrets/`, `vendor/secrets/`. Customer `.clawieignore` overrides may only add paths, never remove. |
 | 015-FR-010 | Workspace state survives container reap (the diff persists in the project artifacts). |
 
 ## Non-functional requirements
 
 | ID | Requirement |
 |---|---|
-| 015-NFR-001 | Copy for a 1 GB repo MUST be ≤30s on commodity hardware. |
+| 015-NFR-001 | Copy for a 1 GB repo MUST be ≤30s on commodity SSD (NVMe or SATA SSD). On HDD/network-storage, target widens to ≤120s and is surfaced as a "slow storage" warning at install via `clawie doctor`. |
 | 015-NFR-002 | Diff capture overhead < 5s for a typical changeset. |
 | 015-NFR-003 | Workspace quota default: 5 GB per project; configurable. |
 

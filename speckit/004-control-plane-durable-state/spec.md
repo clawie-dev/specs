@@ -17,7 +17,7 @@ Survey: Paperclip moved to durable kanban for this exact reason. LangGraph's dur
 
 | ID | Requirement |
 |---|---|
-| 004-FR-001 | All tasks MUST be persisted in a relational store (Postgres in prod, SQLite for single-host dev). |
+| 004-FR-001 | All tasks MUST be persisted in a relational store. SQLite is the canonical v1 single-host store (matches the install promise in spec 025). Postgres is the supported scale-out store; the same schema and queries work on both via the AdonisJS Lucid ORM. |
 | 004-FR-002 | Each task MUST have an idempotency key derived from (project, agent, intent, payload-hash). Re-queuing an identical task MUST not produce duplicate side effects. |
 | 004-FR-003 | Each task MUST follow the canonical state machine: `created → queued → claimed → running → awaiting_approval → running → completing → completed` (or `failed/aborted/timed_out` as terminal states from any non-terminal state). |
 | 004-FR-004 | State transitions MUST be atomic (single-row update with optimistic locking) and logged to audit. |
@@ -37,7 +37,7 @@ Survey: Paperclip moved to durable kanban for this exact reason. LangGraph's dur
 |---|---|
 | 004-NFR-001 | Enqueue p99 < 50ms. Claim p99 < 100ms. Transition p99 < 100ms. |
 | 004-NFR-002 | Recovery sweep at boot completes in <30s for ≤10k orphaned tasks. |
-| 004-NFR-003 | Postgres is canonical. SQLite mode is for single-host dev, tested but not load-bearing for production. |
+| 004-NFR-003 | SQLite is the v1 canonical store for single-host installs (~50 concurrent tasks supported with WAL mode). Postgres is fully supported for higher concurrency; switching is via `clawie migrate-store --to postgres`. Both modes run the same test suite. |
 
 ## Task schema (sketch)
 
@@ -80,9 +80,10 @@ tasks
 - Storm of failures (rate-limit from LLM) → exponential backoff at task level; circuit breaker per provider.
 - Checkpoint payload too large → cap with explicit error; agent must summarize.
 
-## Open questions
+## Decision log
 
-- Job runner: BullMQ (Redis-backed) for queue + Postgres for state, or fully-in-Postgres (pg-boss)? Decision in plan phase. (Lean: pg-boss for simplicity; one fewer dependency.)
+- **Job runner** (resolved 2026-05-22): in-database queue. On SQLite, a lightweight queue table with row-locking + ticker. On Postgres, pg-boss. No Redis dependency in v1. Rationale: one fewer service to install for the indie-VPS persona; queue + state in the same store gives atomic visibility.
+- **Storage default** (resolved 2026-05-22): SQLite for v1 single-host; Postgres for scale.
 
 ## Related specs
 

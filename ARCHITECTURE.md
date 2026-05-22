@@ -17,7 +17,7 @@ Clawie is a **layered, git-versioned, durable agency platform**. Four layers, ea
 └──────────────────────────────┬──────────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────────┐
-│ CONTROL PLANE  (AdonisJS app + Postgres + Redis)                │
+│ CONTROL PLANE  (AdonisJS app + SQLite/Postgres)                 │
 │   ┌─────────────┐  ┌────────────┐  ┌──────────────┐             │
 │   │ Task Store  │  │ Approvals  │  │ Cost Ledger  │             │
 │   │ (durable)   │  │ HITL       │  │ Budgets      │             │
@@ -26,6 +26,10 @@ Clawie is a **layered, git-versioned, durable agency platform**. Four layers, ea
 │   │ Audit Log   │  │ Org Chart  │  │ Benchmark    │             │
 │   │ (immutable) │  │ Team Flows │  │ Tracker      │             │
 │   └─────────────┘  └────────────┘  └──────────────┘             │
+│   ┌─────────────┐  ┌────────────┐                               │
+│   │ Scheduler   │  │ Backup     │                               │
+│   │ (* * * * *) │  │ Runner     │                               │
+│   └─────────────┘  └────────────┘                               │
 └──────────────────────────────┬──────────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────────┐
@@ -71,7 +75,7 @@ All three surfaces are **thin clients of the API**. The API is the only writer t
 
 ### Control plane
 
-Single AdonisJS application. Postgres for durable state, Redis for ephemeral pub/sub + locks.
+Single AdonisJS application. SQLite for v1 single-host (canonical default per spec 004), Postgres for scale. No Redis dependency — queue + locks live in the same store via pg-boss (Postgres) or a lightweight tabled queue (SQLite).
 
 - **Task store** — one row per agent invocation. State machine: `queued → running → awaiting_approval → completed/failed/aborted`. Idempotency keys.
 - **Approvals** — pending decision queue. Tied to a task. Decision rules can be auto-generated from approvals ("always allow X for agent Y").
@@ -79,6 +83,8 @@ Single AdonisJS application. Postgres for durable state, Redis for ephemeral pub
 - **Audit log** — immutable append-only table. Captures every state transition, every tool call, every approval, every config change.
 - **Org chart / team flows** — declarative team config (YAML in the team's git repo) describing roles and who-talks-to-whom.
 - **Benchmark tracker** — scores per agent over commits/time. Surfaces regression alerts.
+- **Scheduler** (spec 027) — single core ticker firing every minute. Consults per-agent schedules (declared in each agent's git repo) and platform schedules, dispatches due work as durable tasks.
+- **Backup runner** (spec 028) — scheduled via the scheduler; writes encrypted snapshots to S3/R2.
 
 ### Policy + credential layer
 

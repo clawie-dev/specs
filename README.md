@@ -53,6 +53,8 @@ Each feature is its own folder. v1 contains only `spec.md`; `plan.md` and `tasks
 | 024 | Plugin Marketplace (market.clawie.dev) | XI, III |
 | 025 | Onboarding & Installation | III, VIII |
 | 026 | Task Management Drivers & Flow Rules | III, V, IX, XII, Security 4 |
+| 027 | Scheduler & Recurring Work | II, V, VI |
+| 028 | Backup & Disaster Recovery | V, VI, VIII |
 
 ## Where this came from
 
@@ -75,7 +77,7 @@ Each feature is its own folder. v1 contains only `spec.md`; `plan.md` and `tasks
 | Foundation documents | Complete |
 | Constitution | Ratified v2.0.0 |
 | Product spec | Complete |
-| Feature specs 001–026 | Complete (drafts; each carries a Draft status header) |
+| Feature specs 001–028 | Complete (drafts; each carries a Draft status header). Audit pass v1 applied 2026-05-22 — see AUDIT-v1.md and AUDIT-v1-resolutions.md. |
 | `plan.md` per feature | Pending (per phase) |
 | `tasks.md` per feature | Pending (per phase) |
 

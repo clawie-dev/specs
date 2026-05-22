@@ -119,7 +119,8 @@ The roadmap is **specced end-to-end** but **delivered in phases**. We do not pro
 - `016-software-agency-pipeline` — the canonical pipeline state machine
 - `017-multi-project-juggling` — scheduler across projects
 - `026-task-management-drivers-flow-rules` — Linear + Jira drivers; status-flow rules
-- A reference team: `default-agency` (researcher, architect, coder, reviewer, security, devops, doc-writer, marketer)
+- `027-scheduler-recurring-work` — per-agent crons (git-versioned) + core ticker; powers post-launch-monitoring, nightly evals, reconcile
+- A reference team: `default-agency` (researcher, architect, coder, reviewer, qa, security, perf, doc-writer, devops, marketer)
 - Project workspace template + reference run
 
 **Exit criteria:**
@@ -138,6 +139,7 @@ The roadmap is **specced end-to-end** but **delivered in phases**. We do not pro
 **Ships:**
 - `024-plugin-marketplace` — market.clawie.dev with signed plugins
 - `025-onboarding-install` — one-command install + first-run validator
+- `028-backup-disaster-recovery` — built-in scheduled backups to S3/R2 + restore
 - Production-grade docs site
 - Reference agencies as installable starter packs
 

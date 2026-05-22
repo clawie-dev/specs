@@ -39,6 +39,7 @@ The agent code calls e.g., `github.create_pr(...)` referencing alias `github_mai
 | 012-FR-008 | Rotation: secrets MAY be rotated server-side; agents continue working without restart. |
 | 012-FR-009 | Operator CLI: `clawie secret add`, `secret rotate`, `secret revoke`, `secret scope` — all audited. |
 | 012-FR-010 | Secret material MUST NEVER appear in dashboards, audit details, exports, traces, or error messages. |
+| 012-FR-011 | **Log-sink redaction (defense-in-depth):** the platform MUST scan all log/audit/trace sinks for known secret material patterns (the broker maintains a registry of the prefixes/shapes of secrets it has issued) and redact matches at write time. Redaction failures MUST themselves be audit-logged. This is a backstop — primary defense remains never giving the agent the raw value. |
 
 ## Non-functional requirements
 

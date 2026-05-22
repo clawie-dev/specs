@@ -39,7 +39,7 @@ First-run experience that gets a working Clawie + default agency in under 10 min
 
 | ID | Requirement |
 |---|---|
-| 025-NFR-001 | Install on a fresh Ubuntu 22.04 VM, no Docker preinstalled → ready in <10 min on a $20 VPS. |
+| 025-NFR-001 | Install on a fresh Ubuntu 22.04 VM, no Docker preinstalled → ready in <10 min on a $20 VPS. v1 default uses SQLite (no Postgres install required); operator can switch to Postgres at any time via `clawie migrate-store --to postgres`. |
 | 025-NFR-002 | Install MUST work without internet access if all images are pre-staged (air-gapped path). |
 | 025-NFR-003 | Failure mid-install MUST leave the system in a recoverable state — never partial. |
 

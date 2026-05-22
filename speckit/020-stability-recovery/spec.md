@@ -33,14 +33,15 @@ The user's direct statement: "we should see failures all the time, like OpenClaw
 
 | ID | Requirement |
 |---|---|
-| 020-FR-001 | Every running task MUST emit liveness ping at configurable interval (default 30s). |
-| 020-FR-002 | Missed N pings (default 3) MUST mark the task `stuck` and trigger recovery. |
+| 020-FR-001 | Every running task MUST emit liveness ping at configurable interval (default 30s). The agent loop's heartbeat thread runs **independently of active work** — pings continue while the agent is waiting on a long LLM call, a slow tool, or a stream of provider events. Liveness ≠ "actively producing tokens"; liveness = "the process is alive and the loop is responsive". |
+| 020-FR-002 | Missed N pings (default 3 → 90s) MUST mark the task `stuck` and trigger recovery. Per-intent overrides allowed (e.g., a `deep-research` intent may extend to 5 missed pings = 150s before stuck-detection). |
 | 020-FR-003 | Every task MUST have a wall-clock TTL (default 60 min, configurable per intent). |
 | 020-FR-004 | Container reconciliation MUST run periodically (default 5 min): list Docker containers, cross-check DB; orphans reaped; ghost containers reaped. |
 | 020-FR-005 | Lease TTL on task claims (default 5 min); expired leases reclaimable. |
 | 020-FR-006 | Deadlock detection: any waiting state (ticket pending, approval pending, lock pending) past a threshold without progress alerts the operator. |
 | 020-FR-007 | Cause-of-failure MUST be captured for every non-success terminal state. Codes per spec 006. |
 | 020-FR-008 | Retries MUST be bounded with exponential backoff; "kill switch" budget per task to prevent infinite loops. |
+| 020-FR-008a | The agent-runtime base image (spec 002) MUST ship a heartbeat library that wraps long-running tool/model calls automatically. Agent authors do not need to manually ping — instrumented by the runtime. Custom skills that perform their own long-running work MUST use the wrapper or explicitly opt out (audit-logged). |
 | 020-FR-009 | Cause-rising metric: any cause class above baseline triggers an alert. |
 | 020-FR-010 | Graceful shutdown: SIGTERM-handling control plane drains tasks (no new claims), waits for in-flight to checkpoint, then exits. |
 | 020-FR-011 | Boot reconcile: on startup, recover orphans + scan for ghost containers + verify submodule SHAs + replay any queued audit events. |

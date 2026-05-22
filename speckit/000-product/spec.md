@@ -294,3 +294,5 @@ This spec is the integration point for every principle. Each feature spec under 
 | `024-plugin-marketplace` | XI, III |
 | `025-onboarding-install` | III, VIII |
 | `026-task-management-drivers-flow-rules` | III, V, IX, XII (Linear/Jira drivers + status-flow rules) |
+| `027-scheduler-recurring-work` | II, V, VI (per-agent crons + core ticker) |
+| `028-backup-disaster-recovery` | V, VI, VIII (built-in scheduled backups + restore) |

@@ -40,6 +40,7 @@ roles:
   - { id: architect, agent: architect }
   - { id: coder, agent: coder }
   - { id: reviewer, agent: reviewer }
+  - { id: qa, agent: qa }
   - { id: security, agent: security }
   - { id: perf, agent: perf }
   - { id: doc_writer, agent: doc-writer }
@@ -53,20 +54,28 @@ manager:
 ### `flows.yaml`
 
 ```yaml
+# Stage names below MUST match the canonical state machine in spec 016.
 pipeline_stages:
-  - { stage: research, owner: researcher, on_complete: spec }
-  - { stage: spec, owner: architect, on_complete: code, approval_required: true }
-  - { stage: code, owner: coder, on_complete: review }
-  - { stage: review, owner: reviewer, on_change: code, on_pass: security }
-  - { stage: security, owner: security, on_fail: code, on_pass: perf }
-  - { stage: perf, owner: perf, on_fail: code, on_pass: docs }
-  - { stage: docs, owner: doc_writer, on_complete: devops, approval_required: true }
-  - { stage: devops, owner: devops, on_complete: marketing }
-  - { stage: marketing, owner: marketer, on_complete: launch_review, approval_required: true }
+  - { stage: research,              owner: researcher, on_complete: spec }
+  - { stage: spec,                  owner: architect,  on_complete: architecture, approval_required: true }
+  - { stage: architecture,          owner: architect,  on_complete: scaffold }
+  - { stage: scaffold,              owner: coder,      on_complete: implement }
+  - { stage: implement,             owner: coder,      on_complete: code-review }
+  - { stage: code-review,           owner: reviewer,   on_change: implement, on_pass: security-review }
+  - { stage: security-review,       owner: security,   on_fail: implement,  on_pass: performance-review }
+  - { stage: performance-review,    owner: perf,       on_fail: implement,  on_pass: documentation }
+  - { stage: documentation,         owner: doc_writer, on_complete: devops-setup, approval_required: true }
+  - { stage: devops-setup,          owner: devops,     on_complete: deploy-staging }
+  - { stage: deploy-staging,        owner: devops,     on_complete: e2e-test }
+  - { stage: e2e-test,              owner: qa,         on_fail: implement,  on_pass: deploy-production }
+  - { stage: deploy-production,     owner: devops,     on_complete: marketing-site, approval_required: true }
+  - { stage: marketing-site,        owner: marketer,   on_complete: launch-announcement }
+  - { stage: launch-announcement,   owner: marketer,   on_complete: post-launch-monitoring, approval_required: true }
+  - { stage: post-launch-monitoring, owner: devops,    recurring: true }   # scheduled via spec 027
 messaging:
-  - { from: coder, to: [reviewer, architect], topic: implementation-questions }
-  - { from: reviewer, to: coder, topic: feedback }
-  - { from: '*', to: manager, topic: blockers }
+  - { from: coder,    to: [reviewer, architect], topic: implementation-questions }
+  - { from: reviewer, to: coder,                 topic: feedback }
+  - { from: '*',      to: manager,               topic: blockers }
 ```
 
 ## Functional requirements

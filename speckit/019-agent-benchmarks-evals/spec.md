@@ -77,7 +77,7 @@ expectations:
 | ID | Requirement |
 |---|---|
 | 019-NFR-001 | A typical agent's eval suite MUST complete in <10 min on default hardware. |
-| 019-NFR-002 | Eval runs MUST NOT block production tasks (separate worker pool / hardware). |
+| 019-NFR-002 | Eval runs MUST NOT block production tasks. **Default isolation model:** eval pool shares the host with production but runs in a separate Docker network at `nice 10` priority and capped to ≤30% of host CPU/RAM. Operators with multiple hosts MAY assign eval workers to dedicated hosts via config. |
 | 019-NFR-003 | Score variance MUST be tracked; high-variance fixtures flagged as noisy. |
 
 ## User stories

@@ -33,7 +33,7 @@ A public registry for community contributions: skills, task-management drivers, 
 | ID | Requirement |
 |---|---|
 | 024-FR-001 | Every plugin MUST have: name, version, type, description, author, signature, repo URL, permission declarations, eval/test report. |
-| 024-FR-002 | Plugins MUST be signed by their author. Marketplace MUST validate signatures and surface "trusted by marketplace" status. |
+| 024-FR-002 | Plugins MUST be signed by their author. Marketplace MUST validate the author signature, and on listing approval, MUST counter-sign with the marketplace key. The resulting plugin has two signatures: author + marketplace, mapping to the trust tiers defined in 010-FR-003a (marketplace = gold, author-only = silver, neither = unsigned/dev). The dashboard MUST surface the tier prominently on every install confirmation. |
 | 024-FR-003 | Marketplace CI MUST run: signature verification, security scan (deps + secrets), smoke test, schema validation. |
 | 024-FR-004 | A human reviewer MUST approve a plugin before its first listing OR an automated trust path (e.g., reputation-based) is established with audit. v1 is human-approval-only. |
 | 024-FR-005 | Operators MUST be able to install via CLI (`clawie plugin install <name>@<version>`) and dashboard. |
