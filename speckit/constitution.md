@@ -1,8 +1,8 @@
 # Clawie Constitution
 
-**Version:** 2.0.0
+**Version:** 2.1.0
 **Ratified:** 2026-05-22
-**Supersedes:** v1.0.0 (`previous-attempts/clawie-attempt-3/specs/speckit/constitution.md`)
+**Supersedes:** v1.0.0 (`previous-attempts/clawie-attempt-3/specs/speckit/constitution.md`); v2.0.0 (same-day amendment for test discipline)
 
 This constitution is the highest-priority specification for Clawie. Every feature spec MUST reference it. Security and stability constraints are NON-NEGOTIABLE; feature specs MUST NOT relax them.
 
@@ -89,12 +89,16 @@ These cannot be relaxed by any feature spec. Override requires constitutional am
 
 ## Quality Standards
 
-- All code MUST have automated tests before merge. Coverage SHOULD remain above 80% on the control plane.
-- All public APIs MUST have OpenAPI documentation and a typed client.
+- All code MUST have automated tests before merge. Coverage targets (per spec 031): **≥90% line / ≥85% branch on control plane code**, **≥85% line on controllers/surfaces**, **100% on critical-path code** (audit, secrets, policy, container lifecycle). Coverage regressions block PR merge.
+- The framework MUST follow the mirror-file convention from spec 031 (`app/foo/bar.ts → tests/unit/foo/bar.test.ts`). A CI gate enforces this. "Files without a covering test" is answerable by `ls`, not by guess.
+- Test pyramid (per spec 031): unit (Japa) → integration with real DB/Docker/Outcall sidecar → E2E with Playwright over CLI + Dashboard + API → smoke per agent → chaos for recovery semantics → nightly load. All tiers run on PRs (slow lanes parallel; chaos + load nightly).
+- Every PR implementing a Functional Requirement MUST annotate the relevant test (`// covers: XXX-FR-NNN`) so FR-to-test traceability is greppable.
+- Flaky tests are NOT allowed to live: a test failing non-deterministically twice in a week is auto-quarantined; quarantine ticket opened.
+- All public APIs MUST have OpenAPI documentation and a typed client (spec 023).
 - All specs MUST use RFC 2119 keywords (MUST, SHOULD, MAY) consistently.
 - All PRs to the Clawie platform MUST reference the spec they implement.
 - Error messages exposed to users MUST NOT leak internal implementation details.
-- All database migrations MUST be reversible.
+- All database migrations MUST be reversible (or explicitly marked `irreversible: true` with reason, per spec 029).
 - All long-running operations MUST have configurable timeouts and surface progress.
 - Every operator-facing failure MUST include a cause-of-failure code and a "what to try next" pointer.
 
@@ -113,3 +117,4 @@ These cannot be relaxed by any feature spec. Override requires constitutional am
 ## Amendment log
 
 - **v2.0.0 — 2026-05-22** — Initial v2. Adds layered architecture (I), end-to-end agency mission (XII), benchmarking principle (VII), stability principle (VIII), validation-before-merge (III), expanded git-everything (II). Inherits v1's permission/sandbox/HITL principles in stronger form.
+- **v2.1.0 — 2026-05-22** — Elevated test discipline from SHOULD to MUST. Added mirror-file convention, per-area coverage targets, test-pyramid mandate, FR-to-test traceability requirement, and flaky-test quarantine policy. New spec 031 (Test Discipline & Coverage) is the source of truth for engineering test rules.

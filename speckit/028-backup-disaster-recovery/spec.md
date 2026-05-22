@@ -153,11 +153,11 @@ clawie restore --from s3://clawie-backups/2026-05-22/ --key <age-key>
 - **Partial backup (DB dump succeeded, git mirror failed)** — entire backup marked invalid; alert; operator decides.
 - **Backup during heavy load** — quiesce extends; alert if exceeds 60s. Operator may configure low-traffic window.
 
-## Open questions
+## Decision log
 
-- **Air-gapped operator** — should backup support local-disk destination cleanly? (Lean: yes, with rotation handled by the runner.)
-- **Backup encryption: age vs sops?** Both work; standardize one for v1 to reduce surface. (Lean: age — simpler.)
-- **Differential / incremental backups?** Out of scope v1; full + retention is simpler. Revisit if backup size becomes a problem.
+- **Air-gapped local-disk destination** (resolved 2026-05-22): supported. `backup.destination: file://<path>` configures local-disk; the runner handles rotation per the same retention policy used for S3/R2.
+- **Encryption library** (resolved 2026-05-22): **age** standardized for v1. Simpler, single-binary, modern primitives. Operator provides recipient public key at install; private key kept off the platform host.
+- **Differential / incremental backups** (resolved 2026-05-22): out of scope v1. Full backup + retention pruning is operationally simpler. Revisit only when a real install hits backup-size pain.
 
 ## Related specs
 

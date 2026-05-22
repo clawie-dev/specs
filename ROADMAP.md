@@ -140,8 +140,14 @@ The roadmap is **specced end-to-end** but **delivered in phases**. We do not pro
 - `024-plugin-marketplace` — market.clawie.dev with signed plugins
 - `025-onboarding-install` — one-command install + first-run validator
 - `028-backup-disaster-recovery` — built-in scheduled backups to S3/R2 + restore
+- `029-upgrades-and-migrations` — versioned upgrade flow with pre-snapshot + rollback
+- `030-webhooks-inbound-outbound` — unified webhook spec for delivery + ingest
 - Production-grade docs site
 - Reference agencies as installable starter packs
+
+## Cross-cutting (every phase, mandatory)
+
+- `031-test-discipline-and-coverage` — applies from Phase 0 onward. No phase exits without its tests at target coverage. Mirror-file convention enforced by CI from day one.
 
 **Exit criteria:**
 - A new user runs the install script and sees a working dashboard with a working sample agent within ~5 minutes.

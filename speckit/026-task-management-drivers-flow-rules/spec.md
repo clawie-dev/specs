@@ -268,11 +268,11 @@ sync:
 - Linear/Jira API rate limits → backoff per spec 020; queue grows; operator visibility.
 - Driver plugin is malicious → mitigated by signature requirement + Outcall-enforced egress allow-list per driver.
 
-## Open questions
+## Decision log
 
-- **Multi-board per team?** v1: single board per team. v2 maybe.
-- **Status-mapping conflicts with `flows.yaml`?** When both exist, the `task-management.yaml` flow is authoritative for external items; `flows.yaml` covers internal-only work. Validator catches contradictions.
-- **What if a transition gate is impossible to satisfy automatically?** That's fine — it becomes a human-only step. Operator manually transitions; audit captures.
+- **Multi-board per team** (resolved 2026-05-22): single board per team in v1. Multi-board (e.g., one team driving both Linear + Jira) deferred to v2 with its own spec.
+- **Status-mapping conflicts with `flows.yaml`** (resolved 2026-05-22): when a team uses `task-management.yaml`, its flow rules are authoritative for items tracked in the external system; `flows.yaml` covers internal-only work that doesn't have an external counterpart. Validator (spec 018) enforces consistency: every stage referenced in `task-management.yaml.status_map` must exist in `flows.yaml.pipeline_stages`, and vice versa.
+- **Impossible-to-automate gates** (resolved 2026-05-22): expected and supported. Gates of kind `hitl` route to the approval queue (spec 005). Gates that no automation can satisfy degrade to manual transitions — the operator performs the move with reason, force-override path audits.
 
 ## Related specs
 

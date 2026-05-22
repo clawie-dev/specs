@@ -83,8 +83,10 @@ Single AdonisJS application. SQLite for v1 single-host (canonical default per sp
 - **Audit log** — immutable append-only table. Captures every state transition, every tool call, every approval, every config change.
 - **Org chart / team flows** — declarative team config (YAML in the team's git repo) describing roles and who-talks-to-whom.
 - **Benchmark tracker** — scores per agent over commits/time. Surfaces regression alerts.
-- **Scheduler** (spec 027) — single core ticker firing every minute. Consults per-agent schedules (declared in each agent's git repo) and platform schedules, dispatches due work as durable tasks.
-- **Backup runner** (spec 028) — scheduled via the scheduler; writes encrypted snapshots to S3/R2.
+- **Scheduler** (spec 027) — single core ticker firing every minute. Consults per-agent schedules (declared in each agent's git repo) and platform schedules, dispatches due work as durable tasks. **Two schedule kinds:** `agent` (invokes the agent, costs LLM tokens) and `script` (deterministic script, ~$0 LLM cost, escalates to an agent only on failure).
+- **Backup runner** (spec 028) — scheduled via the scheduler; writes age-encrypted snapshots to S3/R2/local.
+- **Upgrade runner** (spec 029) — versioned upgrade flow with pre-snapshot, smoke test, automatic rollback on failure.
+- **Webhook dispatcher** (spec 030) — durable outbound delivery with HMAC signing, retry, dead-letter; inbound ingest with signature verification, replay protection, ACK-then-handle.
 
 ### Policy + credential layer
 

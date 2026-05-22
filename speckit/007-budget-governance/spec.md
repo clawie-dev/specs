@@ -13,7 +13,7 @@ Hard budget caps at every scope. Soft alerts before caps. Automatic abort at har
 
 | ID | Requirement |
 |---|---|
-| 007-FR-001 | Budgets MUST be configurable at: platform, team, project, agent, single-task scope. |
+| 007-FR-001 | Budgets MUST be configurable at: platform, team, project, agent, single-task scope, **and per-schedule** (cap how much a recurring cron can spend per period). |
 | 007-FR-002 | A budget MUST specify: amount (USD), period (one-shot / per-day / per-week / per-month), soft-alert thresholds (defaults 50%, 75%, 90%), hard-cap behavior (`abort` / `pause_for_approval`). |
 | 007-FR-003 | The control plane MUST evaluate budget before each LLM call against current spend; on hard cap, reject the call with `cause=budget_exceeded`. |
 | 007-FR-004 | Soft alerts MUST emit to the operator (dashboard + configured channels). |

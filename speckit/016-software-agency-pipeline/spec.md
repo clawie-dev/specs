@@ -122,10 +122,10 @@ completed
 - Cost runs over → spec 007 aborts with state preserved; operator can extend.
 - Approval gate timed out → project pauses; resumes on operator action.
 
-## Open questions
+## Decision log
 
-- Default-agency team contents: ship as a starter pack in v1, or curate via marketplace? (Lean: ship in v1; iterate via marketplace.)
-- Brief parsing: free-form vs structured? (Lean: free-form + LLM-driven extraction by researcher agent.)
+- **Default-agency packaging** (resolved 2026-05-22): ships in v1 as a baseline starter pack (its own repo at `clawie-dev/default-agency`). Operators fork to customize. Future iterations curated through the marketplace.
+- **Brief parsing** (resolved 2026-05-22): free-form text + optional structured fields. The researcher agent in the first stage parses the brief, asks clarifying questions if material info is missing, and produces a structured kickoff doc for downstream stages. No upfront form required.
 
 ## Related specs
 

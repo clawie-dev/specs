@@ -294,5 +294,8 @@ This spec is the integration point for every principle. Each feature spec under 
 | `024-plugin-marketplace` | XI, III |
 | `025-onboarding-install` | III, VIII |
 | `026-task-management-drivers-flow-rules` | III, V, IX, XII (Linear/Jira drivers + status-flow rules) |
-| `027-scheduler-recurring-work` | II, V, VI (per-agent crons + core ticker) |
+| `027-scheduler-recurring-work` | II, V, VI (per-agent crons + core ticker; dual-mode: agent + script) |
 | `028-backup-disaster-recovery` | V, VI, VIII (built-in scheduled backups + restore) |
+| `029-upgrades-and-migrations` | III, VIII (versioned upgrades with rollback) |
+| `030-webhooks-inbound-outbound` | IV, V, VI (signed, retried, ordered, dead-letterable) |
+| `031-test-discipline-and-coverage` | III, VIII (mirror tests, coverage gates, pyramid) |

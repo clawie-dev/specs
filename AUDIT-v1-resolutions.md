@@ -49,7 +49,7 @@ Status legend: ✅ resolved · 🆕 new spec added · 📋 deferred (with ration
 | D2 | No backup / DR | **New spec 028** — Backup & Disaster Recovery. Built-in scheduled backups to S3/R2, encrypted, with restore command. | 🆕 |
 | D3 | Upgrade / migration mechanism | Captured in 028 restore (forward migrations on restore; refuse backward-incompatible without `--force`). Will expand in 025 detail when delivery starts. | 📋 |
 | D4 | Multi-operator / RBAC | Locked: single-operator v1 (see A2). RBAC = v2 spec, not v1. | ⏭ v2 |
-| D5 | Webhook handling | Inbound webhook security explicitly required in 026-FR-005 (verify signatures per external system spec). Outbound webhooks in 023-FR-013. Adequate for v1; dedicated webhook spec deferred. | 📋 |
+| D5 | Webhook handling | **Resolved via new spec 030** — unified: HMAC signing both directions, replay protection (nonce + timestamp window), retry with jitter+backoff, dead-letter queue + redrive, ordering per-resource, SSRF protection, ACK-then-handle for inbound. | ✅ |
 | D6 | Workspace secret protection strictness | Added 015-FR-009a: **strict default-deny list** for workspace mounts. Customer `.clawieignore` is additive-only (narrower, never wider). Both reads and writes blocked. | ✅ |
 | D7 | Time / timezone | Locked: UTC internally everywhere; locale display only. 027 scheduler explicitly UTC-only in v1. | ✅ |
 | D8 | `clawie demo` path under-specified | Deferred to delivery phase 6 (025). Sample 5-min toy project with capped budget remains the goal. | 📋 |
@@ -79,7 +79,7 @@ Status legend: ✅ resolved · 🆕 new spec added · 📋 deferred (with ration
 | Risk items (E) | 7 | All ✅ |
 | **Total** | **33** | **31 resolved / 2 deferred / 1 v2-scoped** |
 
-**New specs added:** 027 (scheduler), 028 (backup/DR). Total feature spec count: 26 → 28.
+**New specs added:** 027 (scheduler with dual-mode crons), 028 (backup/DR), 029 (upgrades/migrations), 030 (webhooks), 031 (test discipline). Total feature spec count: 26 → 31. Constitution amended v2.0.0 → v2.1.0 to elevate test discipline.
 
 **Documents touched:** constitution (no change), product spec (000), 002, 003, 004, 005, 009, 010, 012, 013, 015, 016, 019, 020, 022, 023, 024, 025, 026 plus ARCHITECTURE.md, ROADMAP.md, README.md, AUDIT-v1.md (existing), AUDIT-v1-resolutions.md (this file). New: 027 and 028. clawie.dev/README also updated to reflect React for static site.
 

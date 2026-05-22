@@ -39,11 +39,12 @@ Research consensus: the difference between toy frameworks and production framewo
 
 | ID | Requirement |
 |---|---|
-| 006-FR-020 | Every model call MUST emit a cost entry: (provider, model, in-tokens, out-tokens, USD cost, task id). |
-| 006-FR-021 | Every container minute MUST emit a cost entry with configurable rate per host (defaults to 0 for self-hosted; operator can attribute a host cost). |
+| 006-FR-020 | Every model call MUST emit a cost entry: (provider, model, in-tokens, out-tokens, USD cost, task id, **source**, **schedule_id** if applicable). |
+| 006-FR-021 | Every container minute MUST emit a cost entry with configurable rate per host (defaults to 0 for self-hosted; operator can attribute a host cost). Includes script-cron containers, not just agent ones. |
 | 006-FR-022 | Every external API call (via connector) MAY emit a cost entry if the connector declares pricing. |
-| 006-FR-023 | The ledger MUST roll up: per-agent, per-team, per-project, per-day. |
+| 006-FR-023 | The ledger MUST roll up: per-agent, per-team, per-project, per-day, **per-source** (`brief`/`cron`/`eval`/`platform`/`adhoc`), **per-schedule** (when source = cron). |
 | 006-FR-024 | Currency unit is USD; configurable display in dashboard. |
+| 006-FR-025 | Every cost entry MUST carry a `source` discriminator. Defined values: `brief` (operator-initiated project task), `cron` (scheduled via spec 027 — `schedule_id` populated), `eval` (run via spec 019), `platform` (control-plane internal — reconcile, backup, etc.), `adhoc` (manual trigger). Source enables rollup queries like "how much did crons cost this month?" or "which schedule is the most expensive?". |
 
 ### Errors & cause-of-failure
 

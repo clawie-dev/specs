@@ -108,10 +108,10 @@ Clawie's defining differentiator from the survey is **per-component VCS rollback
 - **Operator manually mutates `~/.clawie/config/` without commit** — boot warns; `--dev-mode` allows, audit notes.
 - **Deleted agent** — submodule removal commit; running tasks gracefully drain; no orphan containers.
 
-## Open questions
+## Decision log
 
-- Should marketplace mirror be a submodule or a separate cached directory? (Lean: submodule with shallow clone.)
-- LFS for large benchmark fixtures? (Defer.)
+- **Marketplace mirror layout** (resolved 2026-05-22): submodule with shallow clone at `skills-registry/`. Mirror pins marketplace state at a known SHA; `clawie skill upgrade` bumps the pin via PR. See spec 010-FR-006.
+- **Git LFS for large benchmark fixtures** (resolved 2026-05-22): not in v1. Benchmark fixtures should be small + checked in as plain blobs. Revisit only if a real need emerges; LFS is operational complexity that doesn't pay until the problem actually exists.
 
 ## Related specs
 
