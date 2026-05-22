@@ -20,7 +20,7 @@ Status legend: ✅ resolved · 🆕 new spec added · 📋 deferred (with ration
 
 | ID | Finding | Resolution | Status |
 |---|---|---|---|
-| B1 | Vue vs React under Inertia | **Vue 3** locked for v1 dashboard (matches AdonisJS Inertia ecosystem). React used for `clawie.dev` static site (Next.js App Router). Spec 022 and clawie.dev/README updated. | ✅ |
+| B1 | Vue vs React under Inertia | Originally Vue 3 (audit). **Flipped to React 19** when the existing AdonisJS scaffold (already configured with `@inertiajs/react`) was inspected — rewriting was wasteful. Spec 022 amended. `clawie.dev` static site also Next.js + React. | ✅ |
 | B2 | Postgres vs SQLite default | **SQLite for v1 single-host** (canonical); Postgres for scale. Same schema via Lucid ORM. Migration tool: `clawie migrate-store --to postgres`. Updated 004-FR-001, 004-NFR-003, 025-NFR-001. | ✅ |
 | B3 | Job runner — BullMQ vs pg-boss | **In-database queue.** On Postgres = pg-boss. On SQLite = lightweight tabled queue with row-locking. No Redis dependency. Added to 004 "Decision log". | ✅ |
 | B4 | Marketplace skills mirror semantics | Clarified in 010-FR-006: `skills-registry/` submodule pins a marketplace snapshot at a known SHA; agent `name@version` references resolve against the mirror at install/boot. `clawie skill upgrade` bumps the pin via PR. | ✅ |
