@@ -1,10 +1,10 @@
 # Clawie — Phased Roadmap
 
-**Date:** 2026-05-22
-**Status:** Plan-of-record
-**Source of truth:** Each phase ships specific spec folders from `specs/speckit/`.
+**Date:** 2026-05-22 (initial plan); reflects shipped state as of 2026-05-24.
+**Status:** Shipped. All seven roadmap phases (0 → 6) have landed; clawie-dev/clawie is tagged `v1.0.0`. Companion `PHASES.md` is the canonical implementation history (broken out by tagged version, including sub-phases 5a/5b/6a/7a/8a/9a/10a interleaved with Outcall).
+**Source of truth:** Each phase shipped specific spec folders from `specs/speckit/`.
 
-The roadmap is **specced end-to-end** but **delivered in phases**. We do not promise dates; we promise scope per phase.
+The roadmap was **specced end-to-end** but **delivered in phases**. Dates were never promised; scope per phase was. Scope is now closed.
 
 ---
 
@@ -29,7 +29,7 @@ The roadmap is **specced end-to-end** but **delivered in phases**. We do not pro
 - CI pipeline (lint, type-check, test)
 - Basic auth (operator token)
 
-**Specs:** None (infrastructure). Captured in `clawie/README.md` and `clawie/docs/development.md`.
+**Specs:** None (infrastructure). Captured in `clawie/README.md` and the operator-facing docs at [clawie-dev/docs](https://github.com/clawie-dev/docs).
 
 **Exit criteria:** `clawie --version` works. `ace serve` runs. Empty dashboard renders. Tests run in CI.
 
