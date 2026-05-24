@@ -3,7 +3,7 @@
 **Target version:** `clawie v0.2.0` + `agent-runtime v0.2.0`
 **Goal (one sentence):** an intent executes inside an ephemeral Docker container instead of in-process, with the same audit + state machine + CLI surface as Phase 1.
 
-**Status:** Plan-of-record (pending greenlight). Phase 1 (v0.1.3) is shipped; this plan picks up from there.
+**Status:** Shipped. Phase 2 landed as `clawie v0.2.1` (container execution via `ContainerSpawner` + `clawie/agent-runtime`) and remains in production through v1.0.0. This document is retained as historical planning context — operator-facing references should point to `PHASES.md`, the v1.0 docs, and the [v0.2.1 release notes](https://github.com/clawie-dev/clawie/releases/tag/v0.2.1).
 
 **Publish strategy decided:** image stays **local-only** for now (built from the `clawie-dev/agent-runtime` repo via `docker build`); we defer pushing to GHCR / Docker Hub until v0.5.x, when more agents start needing it. Tests gate on local Docker availability.
 
