@@ -4,7 +4,7 @@
 **Type:** Product overview
 **Status:** Draft
 **Spec version:** 2.0.0
-**Constitution:** `specs/speckit/constitution.md` v2.0.0
+**Constitution:** `specs/speckit/constitution.md` v2.1.0
 **Owner:** Mark Diderichsen
 
 ---
