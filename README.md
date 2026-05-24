@@ -61,7 +61,7 @@ Each feature is its own folder. v1 contains only `spec.md`; `plan.md` and `tasks
 
 ## Where this came from
 
-- The deep-research report on autonomous AI agent frameworks (`/Users/mark/Downloads/deep-research-report.md`) — synthesized in `RESEARCH-NOTES.md`.
+- A private deep-research report on autonomous AI agent frameworks — synthesized in `RESEARCH-NOTES.md`. The synthesis is the public artifact; the source report is not redistributed.
 - The user's directive in the `/goal` invocation: fully autonomous software agency, AdonisJS surfaces, Outcall integration, git-everything with per-component rollback, continuous benchmarking, validated configurations, stability-first.
 - Previous attempts under `../previous-attempts/` — `clawie-attempt-3` contained an earlier v1 constitution and 8 feature specs that this v2 supersedes (referenced where appropriate).
 - The follow-up directive on task-management drivers (Linear/Jira/etc.) with workflow-enforcement rules — produced spec 026 and minor amendments to specs 013, 014, 016 plus `ARCHITECTURE.md` and `ROADMAP.md`.

@@ -1,6 +1,6 @@
 # Clawie — Research Synthesis
 
-**Source:** `/Users/mark/Downloads/deep-research-report.md` (172 lines, Danish)
+**Source:** Private deep-research report on autonomous AI agent frameworks (172 lines, Danish) — synthesized into this document.
 **Date:** 2026-05-22
 **Status:** Foundation document — informs constitution & all feature specs
 
