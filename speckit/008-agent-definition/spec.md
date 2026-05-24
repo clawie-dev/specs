@@ -21,7 +21,7 @@ Each agent submodule MUST contain:
 
 The motivational layer. Voice, mission, "why I exist". This is the high-level system-prompt scaffold the runtime prepends to every model call. Free-form Markdown. Recommended sections: Identity, Mission, Voice, Boundaries.
 
-### `AGENTS.md` — role and behavior
+### `AGENTS.yaml` — role and behavior
 
 Operational definition: role, primary responsibilities, allowed peers (which other agents may message), preferred communication style, work cadence. Schema:
 
@@ -38,7 +38,7 @@ escalates_to: architect
 # Free-form behavior notes for the model
 ```
 
-### `TOOLS.md` — tools and permission requests
+### `TOOLS.yaml` — tools and permission requests
 
 What tools/skills/connectors this agent declares it needs. Each entry MUST be approvable by the policy engine. Schema:
 
@@ -95,9 +95,9 @@ Human description of the agent.
 | ID | Requirement |
 |---|---|
 | 008-FR-001 | Validation gate MUST refuse to merge an agent commit lacking required files or with schema errors. |
-| 008-FR-002 | The runtime MUST assemble the system prompt from SOUL.md + AGENTS.md + the active task's context. |
+| 008-FR-002 | The runtime MUST assemble the system prompt from SOUL.md + AGENTS.yaml + the active task's context. |
 | 008-FR-003 | Skill load MUST be lazy: declared skills are listed by capability summary in the prompt; full skill content loaded only when the model decides to use it. |
-| 008-FR-004 | Permission requests in TOOLS.md MUST be evaluated against the policy engine at runtime; declaration does not equal grant. |
+| 008-FR-004 | Permission requests in TOOLS.yaml MUST be evaluated against the policy engine at runtime; declaration does not equal grant. |
 | 008-FR-005 | Model fallback MUST be triggered on provider errors with consistent decision logic across agents. |
 | 008-FR-006 | Each agent commit on `main` MUST be tagged with a benchmark score (from spec 019). |
 | 008-FR-007 | An agent definition MUST be human-readable in <10 minutes for any reviewer. |
@@ -112,7 +112,7 @@ Human description of the agent.
 
 - **008-US-001 [P0]** — As an operator, I clone a starter agency and see exactly how the coder agent is configured by reading 4 files.
 - **008-US-002 [P0]** — As an operator, I edit SOUL.md on a branch, run validation, push, and the dashboard surfaces the PR for review.
-- **008-US-003 [P1]** — As an agent, I declare a need for the `stripe` skill in TOOLS.md; the skill is loaded lazily when I attempt a billing task.
+- **008-US-003 [P1]** — As an agent, I declare a need for the `stripe` skill in TOOLS.yaml; the skill is loaded lazily when I attempt a billing task.
 
 ## Acceptance criteria
 
