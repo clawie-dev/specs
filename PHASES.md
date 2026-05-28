@@ -1,7 +1,7 @@
 # Clawie — Implementation Phases
 
 **Date:** 2026-05-22 (initial plan); reflects shipped state as of 2026-05-24.
-**Status:** Shipped. All 17 phases (1 → 10a, including sub-phases 5a/5b/6a/7a/8a/9a) have landed; clawie-dev/clawie is tagged `v1.0.0`. Retained as the implementation history that frames future work.
+**Status:** Shipped. All 17 phases (1 → 10a, including sub-phases 5a/5b/6a/7a/8a/9a/10a) have landed; clawie-dev/clawie is tagged `v1.0.0`. Retained as the implementation history that frames future work.
 **Companion to:** `ROADMAP.md` (spec delivery plan), `speckit/` (spec set)
 
 `ROADMAP.md` describes when each spec is "delivered" in scope. **This document** describes the order in which the framework was **built**, version by version, with each phase shipping a tagged release. The phase-header arrows below show the target version; some phases shipped a patch above that target (e.g. Phase 2 → `v0.2.1`, Phase 6 → `v0.6.1`, Phase 7 → `v0.7.1`, Phase 8 → `v0.8.1`) — the README in `clawie-dev/clawie` lists the canonical landed tag for each capability.
