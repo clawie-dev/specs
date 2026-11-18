@@ -85,3 +85,5 @@ Each feature is its own folder. v1 contains only `spec.md`; `plan.md` and `tasks
 | `tasks.md` per feature | Pending (per phase) |
 
 This satisfies the directive: **spec the end goal in full; deliver in phases**.
+
+[![advertisement](https://ads.servead.net/i/185f6620-899d-4f83-a4be-fcfad8a7c2a2.svg)](https://ads.servead.net/c/185f6620-899d-4f83-a4be-fcfad8a7c2a2)
